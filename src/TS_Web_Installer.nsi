@@ -97,8 +97,6 @@ DetailPrint "Touching Up..."
 RMDir /r "$INSTDIR\temp"
 
 WriteUninstaller "$INSTDIR\Uninstall The Sims 1 Starter Pack.exe"
-ExecShell "open" "$INSTDIR"
-
 SectionEnd
 	
 Section "TS1 Widescreen Patcher" Section2
@@ -113,8 +111,8 @@ Section "Start Menu/Desktop Shortcut" Section7
 	SetShellVarContext current
 	SetOutPath "$INSTDIR"
 	CreateDirectory '$SMPROGRAMS\The Sims 1 Starter Pack\'
-	CreateShortCut '$SMPROGRAMS\The Sims 1 Starter Pack\The Sims.lnk' '$INSTDIR\Sims.exe' "" '$INSTDIR\Sims.exe' 0
-	CreateShortCut '$Desktop\The Sims.lnk' '$INSTDIR\Sims.exe' "" '$INSTDIR\Sims.exe' 0
+	CreateShortCut '$SMPROGRAMS\The Sims 1 Starter Pack\The Sims.lnk' '$INSTDIR\The Sims\Sims.exe' "" '$INSTDIR\The Sims\Sims.exe' 0
+	CreateShortCut '$Desktop\The Sims.lnk' '$INSTDIR\The Sims\Sims.exe' "" '$INSTDIR\The Sims\Sims.exe' 0
 SectionEnd 
 
 Section "Uninstall" Section8
