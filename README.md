@@ -8,7 +8,7 @@ The Starter Pack is an all-in-one source for obtaining, installing, and optimizi
 
 Download the Web Installer from the [latest release](https://github.com/voicemxil/TS-Starter-Pack/releases/latest) and follow the [Full Installation Guide](https://docs.google.com/document/d/1gKoQyXQKPA9hTtywt8OWEZzb4-9615uaSlibAPGb5Oc/edit) to begin!
 
-## [Web Installer](https://github.com/voicemxil/TS-Starter-Pack/releases/latest) ![GitHub file size in bytes](https://img.shields.io/github/size/voicemxil/TS-Starter-Pack/bin/Web%20Installer/TSStarterPack.WebInstaller-v11.exe?branch=v11)
+## [Web Installer](https://github.com/voicemxil/TS-Starter-Pack/releases/latest) ![GitHub file size in bytes](https://img.shields.io/github/size/voicemxil/TS-Starter-Pack/bin/Web%20Installer/TS1StarterPack.WebInstaller-v11.exe?branch=v11)
 - Lightweight NSIS-based web installer (requires stable Internet connection, there is no standalone version at this time)
 - Downloads The Sims Starter Pack - osab's 1.65GB "The Sims Complete Collection" repack automatically 
 - Installs/uninstalls game registry keys without needing original installers/uninstallers
