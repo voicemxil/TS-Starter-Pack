@@ -1,4 +1,4 @@
-<h1 align=center>The Sims Starter Pack - by osab </h1> 
+<h1 align=center>The Sims 1 Starter Pack - by osab </h1> 
 
 ### Download & setup resources for The Sims Complete Collection.
 
@@ -15,3 +15,10 @@ Download the Web Installer from the [latest release](https://github.com/voicemxi
 - Downloads and guides the user to apply The Sims 1 Widescreen Patcher by [FaithBeam](https://github.com/FaithBeam)
 - Optional:
     - Create desktop/start menu shortcuts
+
+# Resources & Support:
+- For help with your TS1 Starter Pack, please [join TS2 Community](https://discord.gg/ts2-community-912700195249197086) and consult the #ts1-help channel! 
+- We have FAQs/channels for the whole series and our support volunteers are active daily.
+- Our members share gameplay, CC/Mods, and plenty of other useful resources.
+## Join TS2 Community here:
+[<img src="https://discordapp.com/api/guilds/912700195249197086/widget.png?style=banner3" alt="">](https://discord.gg/ts2-community-912700195249197086)
