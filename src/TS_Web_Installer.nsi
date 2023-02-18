@@ -112,7 +112,7 @@ SectionEnd
 
 Section "Start Menu/Desktop Shortcut" Section7
 	SetShellVarContext current
-	SetOutPath "$INSTDIR"
+	SetOutPath "$INSTDIR\The Sims"
 	CreateDirectory '$SMPROGRAMS\The Sims 1 Starter Pack\'
 	CreateShortCut '$SMPROGRAMS\The Sims 1 Starter Pack\The Sims.lnk' '$INSTDIR\The Sims\Sims.exe' "" '$INSTDIR\The Sims\Sims.exe' 0
 	CreateShortCut '$Desktop\The Sims.lnk' '$INSTDIR\The Sims\Sims.exe' "" '$INSTDIR\The Sims\Sims.exe' 0
