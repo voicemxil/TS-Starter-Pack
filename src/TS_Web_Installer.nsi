@@ -5,6 +5,42 @@ Unicode True ;Support Unicode format in the installer
 !include "x64.nsh"
 !include ".\Downloader.nsh"
 
+########################### Installer SETUP
+Name "The Sims 1 Starter Pack"
+OutFile "..\bin\Web Installer\TS1StarterPack.WebInstaller-v11.exe"
+RequestExecutionLevel admin
+InstallDir "$PROGRAMFILES32\The Sims 1 Starter Pack"
+
+########################### MUI SETUP
+brandingText "osab Web Installer v11"
+!define MUI_ABORTWARNING
+!define MUI_HEADERIMAGE_BITMAP_STRETCH AspectFitHeight
+!define MUI_HEADERIMAGE_BITMAP "..\assets\header.bmp"
+!define MUI_ICON "..\assets\NewInstaller.ico"
+!define MUI_PAGE_HEADER_TEXT "TS1: Starter Pack - Web Installer"
+!define MUI_PAGE_HEADER_SUBTEXT "TS1 Ultimate Collection repacked by osab!"
+!define MUI_WELCOMEPAGE_TITLE "osab's Sims 1 Starter Pack"
+!define MUI_WELCOMEPAGE_TEXT "Welcome to the Sims 1 Starter Pack Web Installer (v11). Please ensure you have downloaded the latest version from the GitHub! Helpful log messages will be shown in the 'More Details' box."
+!define MUI_UNCONFIRMPAGE_TEXT_TOP "WARNING: Before uninstalling, make sure the folder you chose contains ONLY the uninstaller and game files. The game files MUST be in their own separate folder with no other essential data! I am not responsible for any data loss!"
+!define MUI_LICENSEPAGE_TEXT_TOP "License Information:"
+!define MUI_WELCOMEFINISHPAGE_BITMAP "..\assets\InstallerImage.bmp"
+!define MUI_FINISHPAGE_NOREBOOTSUPPORT
+!define MUI_FINISHPAGE_LINK "TS2 Community Discord Server!"
+!define MUI_FINISHPAGE_LINK_LOCATION "https://discord.gg/invite/ts2-community-912700195249197086"
+!insertmacro MUI_PAGE_WELCOME
+!insertmacro MUI_PAGE_LICENSE "..\LICENSE.txt"
+!insertmacro MUI_PAGE_COMPONENTS
+!insertmacro MUI_PAGE_DIRECTORY
+!insertmacro MUI_PAGE_INSTFILES
+!insertmacro MUI_PAGE_FINISH
+!insertmacro MUI_UNPAGE_WELCOME
+!insertmacro MUI_UNPAGE_DIRECTORY
+!insertmacro MUI_UNPAGE_CONFIRM
+!insertmacro MUI_UNPAGE_INSTFILES
+!insertmacro MUI_UNPAGE_FINISH
+!insertmacro MUI_LANGUAGE "English"
+##################################### Begin Installation
+
 !macro simsTouchup
     SetRegView 32
     WriteRegStr HKLM32 "SOFTWARE\Maxis\The Sims" "EP2Installed" "1"
@@ -20,7 +56,7 @@ Unicode True ;Support Unicode format in the installer
     WriteRegStr HKLM32 "SOFTWARE\Maxis\The Sims" "EPDPatch" "1"
     WriteRegStr HKLM32 "SOFTWARE\Maxis\The Sims" "EPInstalled" "1"
     WriteRegStr HKLM32 "SOFTWARE\Maxis\The Sims" "Installed" "1"
-    WriteRegStr HKLM32 "SOFTWARE\Maxis\The Sims" "InstallPath" "$INSTDIR\The Sims"
+    WriteRegStr HKLM32 "SOFTWARE\Maxis\The Sims" "InstallPath" "$INSTDIR"
     WriteRegDWORD HKLM32 "SOFTWARE\Maxis\The Sims" "Language" "1033"
     WriteRegStr HKLM32 "SOFTWARE\Maxis\The Sims" "SIMS_CURRENT_NEIGHBORHOOD_NUM" "1"
     WriteRegStr HKLM32 "SOFTWARE\Maxis\The Sims" "SIMS_CURRENT_NEIGHBORHOOD_PATH" "UserData"
@@ -38,55 +74,16 @@ Unicode True ;Support Unicode format in the installer
     WriteRegStr HKLM32 "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\The Sims 1 Starter Pack" "UninstallString" "$INSTDIR\Uninstall The Sims Starter Pack"
 !macroEnd
 
-# Names the built installer
-Name "The Sims 1 Starter Pack"
-# Building to:
-OutFile "..\bin\Web Installer\TS1StarterPack.WebInstaller-v11.exe"
-# Administrator Privileges 
-RequestExecutionLevel admin
-# Default Installation Directory
-InstallDir "$PROGRAMFILES32\The Sims 1 Starter Pack"
-
 Function .OnInit
 	Dialer::AttemptConnect
 FunctionEnd
-
-########################### MUI SETUP
-brandingText "osab Web Installer v11"
-!define MUI_ABORTWARNING
-!define MUI_HEADERIMAGE_BITMAP_STRETCH AspectFitHeight
-!define MUI_HEADERIMAGE_BITMAP "..\assets\header.bmp"
-!define MUI_ICON "..\assets\NewInstaller.ico"
-!define MUI_PAGE_HEADER_TEXT "TS1: Starter Pack - Web Installer"
-!define MUI_PAGE_HEADER_SUBTEXT "TS1 Ultimate Collection repacked by osab!"
-
-!define MUI_WELCOMEPAGE_TITLE "osab's Sims 1 Starter Pack"
-!define MUI_WELCOMEPAGE_TEXT "Welcome to the Sims 1 Starter Pack Web Installer (v11). Please ensure you have downloaded the latest version from the GitHub! Helpful log messages will be shown in the 'More Details' box."
-
-!define MUI_LICENSEPAGE_TEXT_TOP "License Information:"
-
-!define MUI_WELCOMEFINISHPAGE_BITMAP "..\assets\InstallerImage.bmp"
-!define MUI_FINISHPAGE_NOREBOOTSUPPORT
-!define MUI_FINISHPAGE_LINK "TS2 Community Discord Server!"
-!define MUI_FINISHPAGE_LINK_LOCATION "https://discord.gg/invite/ts2-community-912700195249197086"
-
-!insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_LICENSE "..\LICENSE.txt"
-!insertmacro MUI_PAGE_COMPONENTS
-!insertmacro MUI_PAGE_DIRECTORY
-!insertmacro MUI_PAGE_INSTFILES
-!insertmacro MUI_PAGE_FINISH
-
-!insertmacro MUI_LANGUAGE "English"
-
-##################################### Begin Installation
 
 Section "TS1 Starter Pack" Section1
 SectionIn RO 
 SetOutPath $INSTDIR
 SetOverwrite on
 InitPluginsDir
-AddSize 240000
+AddSize 2400000
 	
 !insertmacro downloadPack "The Sims" https://github.com/mintalien/The-Puppets-2-Definitive-Edition/releases/download/v11/SFX_TheSims.v11.exe SFX_TheSims.exe "5f3fc0dceec692f0b528f5e0b0060f2faf717bb88f622ad5d5c7f6eb3435d607"
 
@@ -118,8 +115,10 @@ SectionEnd
 Section "Uninstall" Section8
 	SetRegView 32
 	Delete "$INSTDIR\Uninstall The Sims 1 Starter Pack.exe"
-	ReadRegStr $R4 HKLM32 "SOFTWARE\Maxis\The Sims" "InstallPath" 
+	ReadRegStr $R4 HKLM32 "SOFTWARE\Maxis\The Sims" "InstallPath"
+    ${If} $R4 = $INSTDIR
 	RMDir /r $R4
+    ${EndIf}
 	DeleteRegKey HKLM32 "SOFTWARE\Maxis\The Sims"
     DeleteRegKey HKLM32 "SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\Sims.exe"
 	DeleteRegKey HKLM32 "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\The Sims 1 Starter Pack"
