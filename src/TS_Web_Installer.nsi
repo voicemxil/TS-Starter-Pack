@@ -102,6 +102,12 @@ Section "TS1 Widescreen Patcher" Section2
     Pop $0 # return value = exit code, "OK" means OK
 	DetailPrint "Patcher download status: $0. Executing Patcher..." 
 	Execwait "$INSTDIR\Sims1WidescreenPatcher.exe"
+    FileOpen $6 "$INSTDIR\The Sims\DDrawCompat.ini" a
+    FileSeek $6 0 END
+    FileWrite $6 "$\r$\n"
+    FileWrite $6 "CpuAffinity=all"
+    FileWrite $6 "$\r$\n"
+    FileClose $6
 SectionEnd
 
 Section "Start Menu/Desktop Shortcut" Section7
