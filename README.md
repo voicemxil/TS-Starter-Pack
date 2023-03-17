@@ -2,9 +2,13 @@
 
 ### Download & setup resources for The Sims Complete Collection.
 
+
 [![Discord](https://img.shields.io/discord/912700195249197086?color=fa807a&label=osab%27s%20TS2%20Community%20Discord%20Server&logo=Discord&logoColor=white)](https://discord.com/servers/ts2-community-912700195249197086)  ![GitHub all releases](https://img.shields.io/github/downloads/voicemxil/TS-Starter-Pack/total)
 
 The Starter Pack is an all-in-one source for obtaining, installing, and optimizing TS1 on modern hardware. 
+
+![image](https://user-images.githubusercontent.com/69059862/226063960-485188cd-7dab-4da1-a924-9a5bdd92285e.png)
+<sub>(1080p Widescreen Patch pictured)</sub>
 
 ### Follow the [Full Installation Guide](https://docs.google.com/document/d/1gKoQyXQKPA9hTtywt8OWEZzb4-9615uaSlibAPGb5Oc/edit) to begin!
 
