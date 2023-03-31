@@ -107,34 +107,29 @@ Section "TS1 Starter Pack" Section1
     SetOverwrite on
     InitPluginsDir
     AddSize 2400000
+
+	CreateDirectory "$INSTDIR\temp"	
         
     DetailPrint "Downloading The Sims Creator no-CD fix..."
     NScurl::http GET "https://raw.githubusercontent.com/voicemxil/TS-Starter-Pack/v12/components/TheSimsCreator.exe" "$INSTDIR\The Sims Creator\TheSimsCreator.exe" /INSIST /BACKGROUND /END
 
-    !insertmacro downloadPack "The Sims" https://github.com/mintalien/The-Puppets-2-Definitive-Edition/releases/download/v11/SFX_TheSims.v11.exe SFX_TheSims.exe "5f3fc0dceec692f0b528f5e0b0060f2faf717bb88f622ad5d5c7f6eb3435d607"
+    !insertmacro downloadPack "The Sims" https://github.com/mintalien/The-Puppets-2-Definitive-Edition/releases/download/v11/SFX_TheSims.v11.exe "temp\SFX_TheSims.exe" "5f3fc0dceec692f0b528f5e0b0060f2faf717bb88f622ad5d5c7f6eb3435d607"
 
     # Touchup
     DetailPrint "Touching Up..."
     !insertmacro simsTouchup
 
-    RMDir /r "$INSTDIR\temp"
-
     WriteUninstaller "$INSTDIR\Uninstall The Sims 1 Starter Pack.exe"
-
-    ExecShell "open" $INSTDIR
 SectionEnd
 	
 Section "Visual C++ Redist (x64)" Section2
 	SectionInstType ${IT_FULL}
-
-	CreateDirectory "$INSTDIR\temp"	
 	DetailPrint "Downloading VC Redist..."
-	NScurl::http GET "https://aka.ms/vs/17/release/vc_redist.x64.exe" "temp\vc_redist.x64.exe" /RESUME /INSIST /END
+	NScurl::http GET "https://aka.ms/vs/17/release/vc_redist.x64.exe" "$INSTDIR\temp\vc_redist.x64.exe" /RESUME /INSIST /END
 	Pop $0
 	DetailPrint "VC Redist download status: $0. Executing silently..."
 	ExecWait "$INSTDIR\temp\vc_redist.x64.exe /q /norestart"
 	Delete "$INSTDIR\temp\vc_redist.x64.exe"
-	RMDir /r "$INSTDIR\temp"
 	Pop $0
 	DetailPrint "Cleanup result: $0"	
 SectionEnd
@@ -143,6 +138,7 @@ Section "TS1 Widescreen Patcher" Section3
 	SectionInstType ${IT_FULL}
     DetailPrint "Downloading The Sims 1 Widescreen Patcher..."
     NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v12/components/Sims1WidescreenPatcher.exe "$INSTDIR\Sims1WidescreenPatcher.exe" /RESUME /INSIST/ END	
+    Pop $0
 	NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v12/components/PatcherLicense.txt "$INSTDIR\PatcherLicense.txt" /BACKGROUND /END
     ${If} ${IsWin7}
     ${OrIf} ${IsWin8}
@@ -150,8 +146,6 @@ Section "TS1 Widescreen Patcher" Section3
         DetailPrint "Windows 7/8/8.1 detected, downloading older DDrawCompat fix..."
         NSCurl::http GET "https://github.com/voicemxil/TS-Starter-Pack/raw/v12/components/ddraw.0.3.2.Win78Fix.dll" "$INSTDIR\The Sims\ddraw.dll" /RESUME /INSIST/ END	
     ${EndIf}
-    
-    Pop $0 # return value = exit code, "OK" means OK
 	DetailPrint "Patcher download status: $0. Executing Patcher..." 
 	Execwait "$INSTDIR\Sims1WidescreenPatcher.exe"
 SectionEnd
@@ -166,7 +160,8 @@ Section "Start Menu/Desktop Shortcut" Section7
 SectionEnd 
 
 Section
-	ExecShell "open" "$INSTDIR\Fun with Pets\SP9\TSBin"
+	RMDir "$INSTDIR\temp"	
+    ExecShell "open" $INSTDIR
 SectionEnd
 
 Section "Uninstall" Section8
