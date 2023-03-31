@@ -84,10 +84,13 @@ brandingText "osab Web Installer v12"
     WriteRegStr HKLM32 "SOFTWARE\Maxis\The Sims" "SIMS_SOUND" "$INSTDIR\The Sims\SoundData"
     WriteRegStr HKLM32 "SOFTWARE\Maxis\The Sims" "TELEPORT" "1"
     WriteRegStr HKLM32 "SOFTWARE\Maxis\The Sims" "Version" "1.2"
+    WriteRegStr HKLM64 "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" "$INSTDIR\The Sims\Sims.exe" "RUNASADMIN"
     WriteRegStr HKLM32 "SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\Sims.exe" "Path" "$INSTDIR\The Sims"
     WriteRegStr HKLM32 "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\The Sims 1 Starter Pack" "DisplayName" "The Sims 1 Starter Pack"
+    WriteRegStr HKLM32 "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\The Sims 1 Starter Pack" "DisplayIcon" "$\"$INSTDIR\The Sims\Sims.exe$\""
+    WriteRegStr HKLM32 "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\The Sims 1 Starter Pack" "Publisher" "osab / EA"
     WriteRegStr HKLM32 "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\The Sims 1 Starter Pack" "InstallLocation" "$INSTDIR"
-    WriteRegStr HKLM32 "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\The Sims 1 Starter Pack" "UninstallString" "$INSTDIR\Uninstall The Sims Starter Pack"
+    WriteRegStr HKLM32 "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\The Sims 1 Starter Pack" "UninstallString" "$\"$INSTDIR\Uninstall The Sims 1 Starter Pack.exe$\""
 !macroEnd
 
 Function .OnInit
@@ -176,6 +179,7 @@ Section "Uninstall" Section8
 	DeleteRegKey HKLM32 "SOFTWARE\Maxis\The Sims"
     DeleteRegKey HKLM32 "SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\Sims.exe"
 	DeleteRegKey HKLM32 "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\The Sims 1 Starter Pack"
+	DeleteRegValue HKLM64 "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" "$INSTDIR\The Sims\Sims.exe"
 	RMDir /r "$SMPROGRAMS\The Sims 1 Starter Pack"
 	Delete "$Desktop\The Sims.lnk"
 SectionEnd

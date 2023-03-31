@@ -24,5 +24,10 @@ The Starter Pack is an all-in-one source for obtaining, installing, and optimizi
 - For help with your TS1 Starter Pack, please [join TS2 Community](https://discord.gg/ts2-community-912700195249197086) and consult the #ts1-help channel! 
 - We have FAQs/channels for the whole series and our support volunteers are active daily.
 - Our members share gameplay, CC/Mods, and plenty of other useful resources.
-## Join TS2 Community here:
+## Join TS2 Community here to access our TS1 channels!
 [<img src="https://discordapp.com/api/guilds/912700195249197086/widget.png?style=banner3" alt="">](https://discord.gg/ts2-community-912700195249197086)
+
+# Building:
+1. Install [negrutiu's NSIS fork](https://github.com/negrutiu/nsis).
+1. If building a version prior to v12, copy the files from the `.\plugins` directory to your `x86-unicode` plugins folder.
+1. Run NSIS on `.\src\TS_Web_Installer.nsi`, installer will build to `.\bin\Web Installer`.
