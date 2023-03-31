@@ -137,14 +137,14 @@ SectionEnd
 Section "TS1 Widescreen Patcher" Section3
 	SectionInstType ${IT_FULL}
     DetailPrint "Downloading The Sims 1 Widescreen Patcher..."
-    NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v12/components/Sims1WidescreenPatcher.exe "$INSTDIR\Sims1WidescreenPatcher.exe" /RESUME /INSIST/ END	
+    NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v12/components/Sims1WidescreenPatcher.exe "$INSTDIR\Sims1WidescreenPatcher.exe" /INSIST/ END	
     Pop $0
 	NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v12/components/PatcherLicense.txt "$INSTDIR\PatcherLicense.txt" /BACKGROUND /END
     ${If} ${IsWin7}
     ${OrIf} ${IsWin8}
     ${OrIf} ${IsWin8.1}
         DetailPrint "Windows 7/8/8.1 detected, downloading older DDrawCompat fix..."
-        NSCurl::http GET "https://github.com/voicemxil/TS-Starter-Pack/raw/v12/components/ddraw.0.3.2.Win78Fix.dll" "$INSTDIR\The Sims\ddraw.dll" /RESUME /INSIST/ END	
+        NSCurl::http GET "https://github.com/voicemxil/TS-Starter-Pack/raw/v12/components/ddraw.0.3.2.Win78Fix.dll" "$INSTDIR\The Sims\ddraw.dll" /INSIST/ END	
     ${EndIf}
 	DetailPrint "Patcher download status: $0. Executing Patcher..." 
 	Execwait "$INSTDIR\Sims1WidescreenPatcher.exe"
