@@ -102,26 +102,26 @@ InstType "Minimal Installation" IT_MIN
 
 Section "TS1 Starter Pack" Section1
 	SectionInstType ${IT_FULL} ${IT_MIN}
-SectionIn RO 
-SetOutPath $INSTDIR
-SetOverwrite on
-InitPluginsDir
-AddSize 2400000
-	
-DetailPrint "Downloading The Sims Creator no-CD fix..."
-NScurl::http GET "https://raw.githubusercontent.com/voicemxil/TS-Starter-Pack/v12/components/TheSimsCreator.exe" "$INSTDIR\The Sims Creator\TheSimsCreator.exe" /INSIST /BACKGROUND /END
+    SectionIn RO 
+    SetOutPath $INSTDIR
+    SetOverwrite on
+    InitPluginsDir
+    AddSize 2400000
+        
+    DetailPrint "Downloading The Sims Creator no-CD fix..."
+    NScurl::http GET "https://raw.githubusercontent.com/voicemxil/TS-Starter-Pack/v12/components/TheSimsCreator.exe" "$INSTDIR\The Sims Creator\TheSimsCreator.exe" /INSIST /BACKGROUND /END
 
-!insertmacro downloadPack "The Sims" https://github.com/mintalien/The-Puppets-2-Definitive-Edition/releases/download/v11/SFX_TheSims.v11.exe SFX_TheSims.exe "5f3fc0dceec692f0b528f5e0b0060f2faf717bb88f622ad5d5c7f6eb3435d607"
+    !insertmacro downloadPack "The Sims" https://github.com/mintalien/The-Puppets-2-Definitive-Edition/releases/download/v11/SFX_TheSims.v11.exe SFX_TheSims.exe "5f3fc0dceec692f0b528f5e0b0060f2faf717bb88f622ad5d5c7f6eb3435d607"
 
-# Touchup
-DetailPrint "Touching Up..."
-!insertmacro simsTouchup
+    # Touchup
+    DetailPrint "Touching Up..."
+    !insertmacro simsTouchup
 
-RMDir /r "$INSTDIR\temp"
+    RMDir /r "$INSTDIR\temp"
 
-WriteUninstaller "$INSTDIR\Uninstall The Sims 1 Starter Pack.exe"
+    WriteUninstaller "$INSTDIR\Uninstall The Sims 1 Starter Pack.exe"
 
-ExecShell "open" $INSTDIR
+    ExecShell "open" $INSTDIR
 SectionEnd
 	
 Section "Visual C++ Redist (x64)" Section2
@@ -148,7 +148,7 @@ Section "TS1 Widescreen Patcher" Section3
     ${OrIf} ${IsWin8}
     ${OrIf} ${IsWin8.1}
         DetailPrint "Windows 7/8/8.1 detected, downloading older DDrawCompat fix..."
-        NSCurl::http GET "https://github.com/voicemxil/TS-Starter-Pack/raw/v12/components/ddraw.Win78Fix.dll" "$INSTDIR\The Sims\ddraw.dll" /RESUME /INSIST/ END	
+        NSCurl::http GET "https://github.com/voicemxil/TS-Starter-Pack/raw/v12/components/ddraw.0.3.2.Win78Fix.dll" "$INSTDIR\The Sims\ddraw.dll" /RESUME /INSIST/ END	
     ${EndIf}
     
     Pop $0 # return value = exit code, "OK" means OK
