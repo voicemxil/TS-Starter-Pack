@@ -28,6 +28,6 @@ The Starter Pack is an all-in-one source for obtaining, installing, and optimizi
 [<img src="https://discordapp.com/api/guilds/912700195249197086/widget.png?style=banner3" alt="">](https://discord.gg/ts2-community-912700195249197086)
 
 # Building:
-1. Install (negrutiu's NSIS fork)[https://github.com/negrutiu/nsis].
+1. Install [negrutiu's NSIS fork](https://github.com/negrutiu/nsis).
 1. If building a version prior to v12, copy the `.\plugins` directory to your `x86-unicode` plugins folder.
 1. Run NSIS on `.\src\TS_Web_Installer.nsi`, installer will build to `.\bin\Web Installer`.
