@@ -29,5 +29,5 @@ The Starter Pack is an all-in-one source for obtaining, installing, and optimizi
 
 # Building:
 1. Install [negrutiu's NSIS fork](https://github.com/negrutiu/nsis).
-1. If building a version prior to v12, copy the `.\plugins` directory to your `x86-unicode` plugins folder.
+1. If building a version prior to v12, copy the files from the `.\plugins` directory to your `x86-unicode` plugins folder.
 1. Run NSIS on `.\src\TS_Web_Installer.nsi`, installer will build to `.\bin\Web Installer`.
