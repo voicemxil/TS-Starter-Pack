@@ -1,5 +1,6 @@
 Unicode True ;Support Unicode format in the installer
 Target amd64-unicode
+; Target x86-unicode
 
 ;Include header files
 !define MUI_WELCOMEFINISHPAGE_BITMAP "..\assets\InstallerImage.bmp"
@@ -12,20 +13,20 @@ Target amd64-unicode
 
 ########################### Installer SETUP
 Name "The Sims 1 Starter Pack"
-OutFile "..\bin\Web Installer\TS1StarterPack-WebInstaller.v12.x64.exe"
+OutFile "..\bin\Web Installer\TS1StarterPack-WebInstaller.x64.exe"
 RequestExecutionLevel admin
 ShowInstDetails show
 InstallDir "$PROGRAMFILES32\The Sims 1 Starter Pack"
 SetCompressor /SOLID LZMA
 ManifestDPIAware True
-VIProductVersion 12.0.0.0
+VIProductVersion 13.0.0.0
 VIAddVersionKey "CompanyName" "osab"
-VIAddVersionKey "FileVersion" "12.0.0"
+VIAddVersionKey "FileVersion" "13.0.0"
 VIAddVersionKey "ProductName" "The Sims 1 Starter Pack"
-VIAddVersionKey "ProductVersion" "12.0"
+VIAddVersionKey "ProductVersion" "13.0"
 
 ########################### MUI SETUP
-brandingText "osab Web Installer v12"
+brandingText "osab Web Installer v13"
 !define MUI_ABORTWARNING
 !define MUI_INSTFILESPAGE_COLORS "FFFFFF 000000"
 !define MUI_HEADERIMAGE
@@ -36,7 +37,7 @@ brandingText "osab Web Installer v12"
 !define MUI_PAGE_HEADER_TEXT "TS1: Starter Pack - Web Installer"
 !define MUI_PAGE_HEADER_SUBTEXT "TS1 Complete Collection repacked by osab!"
 !define MUI_WELCOMEPAGE_TITLE "osab's Sims 1 Starter Pack"
-!define MUI_WELCOMEPAGE_TEXT "Welcome to the Sims 1 Starter Pack Web Installer (v12). $\n$\nPlease ensure you have downloaded the latest version from the GitHub! $\n$\nHelpful log messages will be shown in the 'More Details' box."
+!define MUI_WELCOMEPAGE_TEXT "Welcome to the Sims 1 Starter Pack Web Installer (v13). $\n$\nPlease ensure you have downloaded the latest version from the GitHub! $\n$\nHelpful log messages will be shown in the 'More Details' box."
 !define MUI_UNCONFIRMPAGE_TEXT_TOP "WARNING: Before uninstalling, make sure the folder you chose contains ONLY the uninstaller and game files. The game files MUST be in their own separate folder with no other essential data! I am not responsible for any data loss!"
 !define MUI_LICENSEPAGE_TEXT_TOP "License Information:"
 
@@ -98,10 +99,9 @@ Function .OnInit
 FunctionEnd
 
 InstType "Full Installation" IT_FULL
-InstType "Minimal Installation" IT_MIN
 
 Section "TS1 Starter Pack" Section1
-	SectionInstType ${IT_FULL} ${IT_MIN}
+	SectionInstType ${IT_FULL}
     SectionIn RO 
     SetOutPath $INSTDIR
     SetOverwrite on
@@ -111,7 +111,7 @@ Section "TS1 Starter Pack" Section1
 	CreateDirectory "$INSTDIR\temp"	
         
     DetailPrint "Downloading The Sims Creator no-CD fix..."
-    NScurl::http GET "https://raw.githubusercontent.com/voicemxil/TS-Starter-Pack/v12/components/TheSimsCreator.exe" "$INSTDIR\The Sims Creator\TheSimsCreator.exe" /INSIST /BACKGROUND /END
+    NScurl::http GET "https://raw.githubusercontent.com/voicemxil/TS-Starter-Pack/v13/components/TheSimsCreator.exe" "$INSTDIR\The Sims Creator\TheSimsCreator.exe" /INSIST /BACKGROUND /END
 
     !insertmacro downloadPack "The Sims" https://github.com/mintalien/The-Puppets-2-Definitive-Edition/releases/download/v11/SFX_TheSims.v11.exe "temp\SFX_TheSims.exe" "5f3fc0dceec692f0b528f5e0b0060f2faf717bb88f622ad5d5c7f6eb3435d607"
 
@@ -137,15 +137,9 @@ SectionEnd
 Section "TS1 Widescreen Patcher" Section3
 	SectionInstType ${IT_FULL}
     DetailPrint "Downloading The Sims 1 Widescreen Patcher..."
-    NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v12/components/Sims1WidescreenPatcher.exe "$INSTDIR\Sims1WidescreenPatcher.exe" /INSIST/ END	
+    NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v13/components/Sims1WidescreenPatcher.exe "$INSTDIR\Sims1WidescreenPatcher.exe" /INSIST/ END	
     Pop $0
-	NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v12/components/PatcherLicense.txt "$INSTDIR\PatcherLicense.txt" /BACKGROUND /END
-    ${If} ${IsWin7}
-    ${OrIf} ${IsWin8}
-    ${OrIf} ${IsWin8.1}
-        DetailPrint "Windows 7/8/8.1 detected, downloading older DDrawCompat fix..."
-        NSCurl::http GET "https://github.com/voicemxil/TS-Starter-Pack/raw/v12/components/ddraw.0.3.2.Win78Fix.dll" "$INSTDIR\The Sims\ddraw.dll" /INSIST/ END	
-    ${EndIf}
+	NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v13/components/PatcherLicense.txt "$INSTDIR\PatcherLicense.txt" /BACKGROUND /END
 	DetailPrint "Patcher download status: $0. Executing Patcher..." 
 	Execwait "$INSTDIR\Sims1WidescreenPatcher.exe"
 SectionEnd
@@ -182,7 +176,7 @@ SectionEnd
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
   !insertmacro MUI_DESCRIPTION_TEXT ${Section1} "Installs The Sims Complete Collection (minimal install)."
   !insertmacro MUI_DESCRIPTION_TEXT ${Section2} "Installs Visual C++ Redist (x64). Required for Widescreen Patcher."
-  !insertmacro MUI_DESCRIPTION_TEXT ${Section3} "Installs The Sims 1 Widescreen Patcher v3.3.0 by FaithBeam."
+  !insertmacro MUI_DESCRIPTION_TEXT ${Section3} "Installs The Sims 1 Widescreen Patcher v3.4.0 by FaithBeam."
   !insertmacro MUI_DESCRIPTION_TEXT ${Section7} "Create a shortuct to launch the game in your Start Menu/Desktop."
 
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
