@@ -9,7 +9,7 @@ Target amd64-unicode
 !include "x64.nsh"
 !include "WinVer.nsh"
 !include ".\Downloader.nsh"
-!include ".\Lanugage-r.nsh"
+!include ".\Language-r.nsh"
 
 ########################### Installer SETUP
 Name "The Sims 1 Starter Pack"
@@ -85,7 +85,9 @@ brandingText "osab Web Installer v13"
     WriteRegStr HKLM32 "SOFTWARE\Maxis\The Sims" "SIMS_SOUND" "$INSTDIR\The Sims\SoundData"
     WriteRegStr HKLM32 "SOFTWARE\Maxis\The Sims" "TELEPORT" "1"
     WriteRegStr HKLM32 "SOFTWARE\Maxis\The Sims" "Version" "1.2"
+    ${If} $INSTDIR = "$PROGRAMFILES32\The Sims 1 Starter Pack"
     WriteRegStr HKLM64 "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" "$INSTDIR\The Sims\Sims.exe" "RUNASADMIN"
+    ${EndIf}
     WriteRegStr HKLM32 "SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\Sims.exe" "Path" "$INSTDIR\The Sims"
     WriteRegStr HKLM32 "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\The Sims 1 Starter Pack" "DisplayName" "The Sims 1 Starter Pack"
     WriteRegStr HKLM32 "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\The Sims 1 Starter Pack" "DisplayIcon" "$\"$INSTDIR\The Sims\Sims.exe$\""
