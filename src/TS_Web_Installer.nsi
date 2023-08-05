@@ -165,7 +165,10 @@ Section "Uninstall" Section8
 	Delete "$INSTDIR\Uninstall The Sims 1 Starter Pack.exe"
 	ReadRegStr $R4 HKLM32 "SOFTWARE\Maxis\The Sims" "InstallPath"
     ${If} $R4 = $INSTDIR
-	RMDir /r $R4
+	RMDir /r "$R4\The Sims"
+	RMDir /r "$R4\The Sims Creator"
+    Delete "$R4\Sims1WidescreenPatcher.exe"
+    Delete "$R4\PatcherLicense.txt"
     ${EndIf}
 	DeleteRegKey HKLM32 "SOFTWARE\Maxis\The Sims"
     DeleteRegKey HKLM32 "SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\Sims.exe"
