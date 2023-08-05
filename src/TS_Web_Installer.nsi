@@ -1,6 +1,5 @@
 Unicode True ;Support Unicode format in the installer
 Target amd64-unicode
-; Target x86-unicode
 
 ;Include header files
 !define MUI_WELCOMEFINISHPAGE_BITMAP "..\assets\InstallerImage.bmp"
@@ -10,6 +9,7 @@ Target amd64-unicode
 !include "x64.nsh"
 !include "WinVer.nsh"
 !include ".\Downloader.nsh"
+!include ".\Lanugage-r.nsh"
 
 ########################### Installer SETUP
 Name "The Sims 1 Starter Pack"
@@ -118,7 +118,7 @@ Section "TS1 Starter Pack" Section1
     # Touchup
     DetailPrint "Touching Up..."
     !insertmacro simsTouchup
-
+    !insertmacro setLanguage "Maxis\The Sims"
     WriteUninstaller "$INSTDIR\Uninstall The Sims 1 Starter Pack.exe"
 SectionEnd
 	
