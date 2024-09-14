@@ -9,17 +9,17 @@ Target x86-unicode
 
 ########################### Installer SETUP
 Name "The Sims 1 Starter Pack"
-OutFile "..\bin\Web Installer\TS1StarterPack-WebInstaller.exe"
+OutFile "..\bin\Standalone Touchup\TS1StarterPack-StandaloneTouchup.exe"
 RequestExecutionLevel admin
 ShowInstDetails show
 InstallDir "$PROGRAMFILES32\The Sims 1 Starter Pack"
 SetCompressor /SOLID LZMA
 ManifestDPIAware True
-VIProductVersion 15.0.1.0
+VIProductVersion 15.0.0.0
 VIAddVersionKey "CompanyName" "osab"
-VIAddVersionKey "FileVersion" "15.0.1"
+VIAddVersionKey "FileVersion" "15.0.0"
 VIAddVersionKey "ProductName" "The Sims 1 Starter Pack"
-VIAddVersionKey "ProductVersion" "15.0.1"
+VIAddVersionKey "ProductVersion" "15.0"
 
 ########################### MUI SETUP
 brandingText "osab Web Installer v15"
@@ -37,10 +37,10 @@ brandingText "osab Web Installer v15"
 !define MUI_PAGE_HEADER_TEXT "TS1: Starter Pack - Web Installer"
 !define MUI_PAGE_HEADER_SUBTEXT "TS1 Complete Collection repacked by osab!"
 !define MUI_WELCOMEPAGE_TITLE "osab's Sims 1 Starter Pack"
-!define MUI_WELCOMEPAGE_TEXT "Welcome to the Sims 1 Starter Pack Web Installer (v15). $\n$\nPlease ensure you have downloaded the latest version from the GitHub!"
+!define MUI_WELCOMEPAGE_TEXT "Welcome to the Sims 1 Starter Pack Touchup Installer (v15). $\n$\nPlease ensure you have downloaded the latest version from the GitHub!"
 !define MUI_UNCONFIRMPAGE_TEXT_TOP "WARNING: Before uninstalling, make sure the game folder you chose contains ONLY the uninstaller and game files. The game files MUST be in their own folder with no other essential data! Back up any UserData save files left behind in the game folder if needed! I am not responsible for any data loss!"
 !define MUI_LICENSEPAGE_TEXT_TOP "License Information:"
-
+!define MUI_FINISHPAGE_NOAUTOCLOSE
 !define MUI_FINISHPAGE_NOREBOOTSUPPORT
 !define MUI_FINISHPAGE_LINK "TS2 Community Discord Server!"
 !define MUI_FINISHPAGE_LINK_LOCATION "https://discord.gg/ts2community"
@@ -74,7 +74,7 @@ brandingText "osab Web Installer v15"
     WriteRegStr HKLM32 "SOFTWARE\Maxis\The Sims" "EPInstalled" "1"
     WriteRegStr HKLM32 "SOFTWARE\Maxis\The Sims" "Installed" "1"
     WriteRegStr HKLM32 "SOFTWARE\Maxis\The Sims" "InstallPath" "$INSTDIR"
-    WriteRegDWORD HKLM32 "SOFTWARE\Maxis\The Sims" "Language" "1033"
+    WriteRegDWORD HKLM32 "SOFTWARE\Maxis\The Sims" "Language" "409"
     WriteRegStr HKLM32 "SOFTWARE\Maxis\The Sims" "SIMS_CURRENT_NEIGHBORHOOD_NUM" "1"
     WriteRegStr HKLM32 "SOFTWARE\Maxis\The Sims" "SIMS_CURRENT_NEIGHBORHOOD_PATH" "UserData"
     WriteRegStr HKLM32 "SOFTWARE\Maxis\The Sims" "SIMS_DATA" "$INSTDIR\The Sims"
@@ -96,11 +96,26 @@ brandingText "osab Web Installer v15"
     WriteRegStr HKLM32 "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\The Sims 1 Starter Pack" "UninstallString" "$\"$INSTDIR\Uninstall The Sims 1 Starter Pack.exe$\""
 !macroEnd
 
-Function .OnInit
-	Dialer::AttemptConnect
-FunctionEnd
-
 InstType "Full Installation" IT_FULL
+
+!macro RemovePreviousInstall
+    SetRegView 32
+    ClearErrors
+    EnumRegKey $0 HKLM32 "SOFTWARE\Maxis\The Sims" 0
+IfErrors keydontexist keyexists
+goto noo
+keyexists:
+    ReadRegStr $R4 HKLM32 "SOFTWARE\Maxis\The Sims" "InstallPath" 
+    MessageBox MB_YESNO|MB_ICONEXCLAMATION "A previous installation of The Sims was detected on this system. Leaving behind remnants in the registry can cause unwanted behavior. Would you like the installer to remove the conflicting registry keys?$\n$\nWARNING: this will remove the keys we detected, rendering the old installation unplayable. Your game file and save file directories will not be affected." IDYES si IDNO noo
+si:
+    DeleteRegKey HKLM32 "SOFTWARE\Maxis\The Sims" 
+    DeleteRegKey HKLM32 "SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\Sims.exe"
+    goto noo
+keydontexist:
+    #key doesn't exist
+    DetailPrint "No prior installations were detected. Yay!"
+noo:
+!macroend
 
 Section "TS1 Starter Pack" Section1
 	SectionInstType ${IT_FULL}
@@ -108,80 +123,20 @@ Section "TS1 Starter Pack" Section1
     SetOutPath $INSTDIR
     SetOverwrite on
     InitPluginsDir
-    AddSize 2400000
+
+    !insertmacro RemovePreviousInstall
 
 	CreateDirectory "$INSTDIR\temp"	
         
-    DetailPrint "Downloading The Sims Creator no-CD fix..."
-    NScurl::http GET "https://raw.githubusercontent.com/voicemxil/TS-Starter-Pack/v13/components/TheSimsCreator.exe" "$INSTDIR\The Sims Creator\TheSimsCreator.exe" /INSIST /BACKGROUND /END
-
-    !insertmacro downloadPack "The Sims" https://github.com/mintalien/The-Puppets-2-Definitive-Edition/releases/download/v11/SFX_TheSims.v11.exe "temp\SFX_TheSims.exe" "5f3fc0dceec692f0b528f5e0b0060f2faf717bb88f622ad5d5c7f6eb3435d607"
+    DetailPrint "Adding The Sims Creator no-CD fix..."
+    SetOutPath "$INSTDIR\The Sims Creator"
+    File "..\components\TheSimsCreator.exe"
 
     # Touchup
     DetailPrint "Touching Up..."
     !insertmacro simsTouchup
     !insertmacro setLanguage "Maxis\The Sims"
     WriteUninstaller "$INSTDIR\Uninstall The Sims 1 Starter Pack.exe"
-
-    SetOutPath "$INSTDIR\temp"
-    NScurl::http GET "https://raw.githubusercontent.com/voicemxil/TS-Starter-Pack/v15/components/ExtraContent.7z" "$INSTDIR\temp\ExtraContent.7z" /INSIST /END
-    Pop $0
-    DetailPrint "Extra Content download status: $0"
-    SetOutPath "$INSTDIR\The Sims"
-    Nsis7z::ExtractWithDetails "$INSTDIR\temp\ExtraContent.7z" "Extracting Extra Content %s"
-SectionEnd
-	
-Section "Visual C++ Redist" Section2
-	SectionInstType ${IT_FULL}
-	DetailPrint "Downloading VC Redist..."
-    SetOutPath $INSTDIR\temp
-	${If} ${RunningX64}
-        NScurl::http GET "https://aka.ms/vs/17/release/vc_redist.x64.exe" "$INSTDIR\temp\vc_redist.exe" /RESUME /INSIST /END
-	    Pop $0
-    ${Else} 
-        NScurl::http GET "https://aka.ms/vs/17/release/vc_redist.x86.exe" "$INSTDIR\temp\vc_redist.exe" /RESUME /INSIST /END
-        Pop $0
-    ${EndIf}
-	DetailPrint "VC Redist download status: $0. Executing silently..."
-	ExecWait '"$INSTDIR\temp\vc_redist.exe" /q /norestart'
-	Delete "$INSTDIR\temp\vc_redist.exe"
-SectionEnd
-
-Section "TS1 Widescreen Patcher" Section3
-	SectionInstType ${IT_FULL}
-    DetailPrint "Downloading The Sims 1 Widescreen Patcher..."
-    ${If} ${RunningX64} 
-        SetOutPath $INSTDIR
-        NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v15/components/Sims1WidescreenPatcher.exe "$INSTDIR\Sims1WidescreenPatcher.exe" /INSIST /END	
-        Pop $0
-        DetailPrint "Patcher download status: $0."
-
-        SetOutPath "$INSTDIR\The Sims"
-        NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v15.0.1/components/ddraw.dll "$INSTDIR\The Sims\ddraw.dll" /INSIST /END
-        Pop $0
-        DetailPrint "Updated ddrawcompat download status: $0."
-
-	    NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v15/components/PatcherLicense.txt "$INSTDIR\PatcherLicense.txt" /BACKGROUND /END
-    ${Else}
-        SetOutPath $INSTDIR\temp
-        NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v15/components/Patcher_Legacy.7z "$INSTDIR\temp\Patcher_Legacy.7z" /INSIST /END
-        Pop $0
-        DetailPrint "Patcher download status: $0. Extracting..."
-        SetOutPath $INSTDIR
-
-        Nsis7z::ExtractWithDetails "$INSTDIR\temp\Patcher_Legacy.7z" "Extracting Widescreen Patcher (Legacy) %s"
-        Pop $0
-        DetailPrint "Extract status: $0"
-        Delete "$INSTDIR\temp\Patcher_Legacy.7z"
-
-        NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v15/components/dotNetFx40_Full_x86_x64.exe "$INSTDIR\temp\dotnet.exe" /INSIST /END
-        DetailPrint ".NET download status: $0. Executing silently..."
-        ExecWait '"$INSTDIR\temp\dotnet.exe" /q /norestart'
-        Delete "$INSTDIR\temp\dotnet.exe"
-    ${EndIf}
-    SetOutPath $INSTDIR
-	DetailPrint "Executing Patcher..." 
-	Execwait "$INSTDIR\Sims1WidescreenPatcher.exe"
 SectionEnd
 
 Section "Start Menu/Desktop Shortcut" Section7
