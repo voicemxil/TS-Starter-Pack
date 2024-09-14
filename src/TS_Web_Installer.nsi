@@ -156,6 +156,10 @@ Section "TS1 Widescreen Patcher" Section3
         Pop $0
         DetailPrint "Patcher download status: $0."
 
+        SetOutPath $INSTDIR
+	    DetailPrint "Executing Patcher..." 
+	    Execwait "$INSTDIR\Sims1WidescreenPatcher.exe"
+
         SetOutPath "$INSTDIR\The Sims"
         NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v15.0.1/components/ddraw.dll "$INSTDIR\The Sims\ddraw.dll" /INSIST /END
         Pop $0
@@ -178,10 +182,11 @@ Section "TS1 Widescreen Patcher" Section3
         DetailPrint ".NET download status: $0. Executing silently..."
         ExecWait '"$INSTDIR\temp\dotnet.exe" /q /norestart'
         Delete "$INSTDIR\temp\dotnet.exe"
+
+        SetOutPath $INSTDIR
+	    DetailPrint "Executing Patcher..." 
+	    Execwait "$INSTDIR\Sims1WidescreenPatcher.exe"
     ${EndIf}
-    SetOutPath $INSTDIR
-	DetailPrint "Executing Patcher..." 
-	Execwait "$INSTDIR\Sims1WidescreenPatcher.exe"
 SectionEnd
 
 Section "Start Menu/Desktop Shortcut" Section7
