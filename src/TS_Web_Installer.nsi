@@ -37,7 +37,7 @@ brandingText "osab Web Installer v15"
 !define MUI_PAGE_HEADER_TEXT "TS1: Starter Pack - Web Installer"
 !define MUI_PAGE_HEADER_SUBTEXT "TS1 Complete Collection repacked by osab!"
 !define MUI_WELCOMEPAGE_TITLE "osab's Sims 1 Starter Pack"
-!define MUI_WELCOMEPAGE_TEXT "Welcome to the Sims 1 Starter Pack Web Installer (v15). $\n$\nPlease ensure you have downloaded the latest version from the GitHub! $\n$\nHelpful log messages will be shown in the 'More Details' box."
+!define MUI_WELCOMEPAGE_TEXT "Welcome to the Sims 1 Starter Pack Web Installer (v15). $\n$\nPlease ensure you have downloaded the latest version from the GitHub!"
 !define MUI_UNCONFIRMPAGE_TEXT_TOP "WARNING: Before uninstalling, make sure the game folder you chose contains ONLY the uninstaller and game files. The game files MUST be in their own folder with no other essential data! Back up any UserData save files left behind in the game folder if needed! I am not responsible for any data loss!"
 !define MUI_LICENSEPAGE_TEXT_TOP "License Information:"
 
@@ -122,11 +122,19 @@ Section "TS1 Starter Pack" Section1
     !insertmacro simsTouchup
     !insertmacro setLanguage "Maxis\The Sims"
     WriteUninstaller "$INSTDIR\Uninstall The Sims 1 Starter Pack.exe"
+
+    SetOutPath "$INSTDIR\temp"
+    NScurl::http GET "https://raw.githubusercontent.com/voicemxil/TS-Starter-Pack/v15/components/ExtraContent.7z" "$INSTDIR\temp\ExtraContent.7z" /INSIST /END
+    Pop $0
+    DetailPrint "Extra Content download status: $0"
+    SetOutPath "$INSTDIR\The Sims"
+    Nsis7z::ExtractWithDetails "$INSTDIR\temp\ExtraContent.7z" "Extracting Extra Content %s"
 SectionEnd
 	
 Section "Visual C++ Redist" Section2
 	SectionInstType ${IT_FULL}
 	DetailPrint "Downloading VC Redist..."
+    SetOutPath $INSTDIR\temp
 	${If} ${RunningX64}
         NScurl::http GET "https://aka.ms/vs/17/release/vc_redist.x64.exe" "$INSTDIR\temp\vc_redist.exe" /RESUME /INSIST /END
 	    Pop $0
@@ -143,6 +151,7 @@ Section "TS1 Widescreen Patcher" Section3
 	SectionInstType ${IT_FULL}
     DetailPrint "Downloading The Sims 1 Widescreen Patcher..."
     ${If} ${RunningX64} 
+        SetOutPath $INSTDIR
         NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v15/components/Sims1WidescreenPatcher.exe "$INSTDIR\Sims1WidescreenPatcher.exe" /INSIST /END	
         Pop $0
         DetailPrint "Patcher download status: $0."
