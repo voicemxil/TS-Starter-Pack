@@ -1,11 +1,7 @@
 Unicode True ;Support Unicode format in the installer
-Target amd64-unicode
+Target x86-unicode
 
-;Include header files
-!define MUI_WELCOMEFINISHPAGE_BITMAP "..\assets\InstallerImage.bmp"
-!define MUI_UNWELCOMEFINISHPAGE_BITMAP "..\assets\InstallerImage.bmp"
-!include "ModernXL.nsh"
-!include "MUI2.nsh"
+;Include header filess
 !include "x64.nsh"
 !include "WinVer.nsh"
 !include ".\Downloader.nsh"
@@ -13,37 +9,41 @@ Target amd64-unicode
 
 ########################### Installer SETUP
 Name "The Sims 1 Starter Pack"
-OutFile "..\bin\Web Installer\TS1StarterPack-WebInstaller.x64.exe"
+OutFile "..\bin\Web Installer\TS1StarterPack-WebInstaller.exe"
 RequestExecutionLevel admin
 ShowInstDetails show
 InstallDir "$PROGRAMFILES32\The Sims 1 Starter Pack"
 SetCompressor /SOLID LZMA
 ManifestDPIAware True
-VIProductVersion 13.0.0.0
+VIProductVersion 15.0.0.0
 VIAddVersionKey "CompanyName" "osab"
-VIAddVersionKey "FileVersion" "13.0.0"
+VIAddVersionKey "FileVersion" "15.0.0"
 VIAddVersionKey "ProductName" "The Sims 1 Starter Pack"
-VIAddVersionKey "ProductVersion" "13.0"
+VIAddVersionKey "ProductVersion" "15.0"
 
 ########################### MUI SETUP
-brandingText "osab Web Installer v13"
+brandingText "osab Web Installer v15"
 !define MUI_ABORTWARNING
 !define MUI_INSTFILESPAGE_COLORS "FFFFFF 000000"
 !define MUI_HEADERIMAGE
 !define MUI_HEADERIMAGE_RIGHT
 !define MUI_HEADERIMAGE_BITMAP "..\assets\header.bmp"
 !define MUI_HEADERIMAGE_BITMAP_STRETCH AspectFitHeight
+!define MUI_WELCOMEFINISHPAGE_BITMAP "..\assets\InstallerImage.bmp"
+!define MUI_UNWELCOMEFINISHPAGE_BITMAP "..\assets\InstallerImage.bmp"
+!include "ModernXL.nsh"
+!include "MUI2.nsh"
 !define MUI_ICON "..\assets\NewInstaller.ico"
 !define MUI_PAGE_HEADER_TEXT "TS1: Starter Pack - Web Installer"
 !define MUI_PAGE_HEADER_SUBTEXT "TS1 Complete Collection repacked by osab!"
 !define MUI_WELCOMEPAGE_TITLE "osab's Sims 1 Starter Pack"
-!define MUI_WELCOMEPAGE_TEXT "Welcome to the Sims 1 Starter Pack Web Installer (v13). $\n$\nPlease ensure you have downloaded the latest version from the GitHub! $\n$\nHelpful log messages will be shown in the 'More Details' box."
-!define MUI_UNCONFIRMPAGE_TEXT_TOP "WARNING: Before uninstalling, make sure the folder you chose contains ONLY the uninstaller and game files. The game files MUST be in their own separate folder with no other essential data! I am not responsible for any data loss!"
+!define MUI_WELCOMEPAGE_TEXT "Welcome to the Sims 1 Starter Pack Web Installer (v15). $\n$\nPlease ensure you have downloaded the latest version from the GitHub! $\n$\nHelpful log messages will be shown in the 'More Details' box."
+!define MUI_UNCONFIRMPAGE_TEXT_TOP "WARNING: Before uninstalling, make sure the game folder you chose contains ONLY the uninstaller and game files. The game files MUST be in their own folder with no other essential data! Back up any UserData save files left behind in the game folder if needed! I am not responsible for any data loss!"
 !define MUI_LICENSEPAGE_TEXT_TOP "License Information:"
 
 !define MUI_FINISHPAGE_NOREBOOTSUPPORT
 !define MUI_FINISHPAGE_LINK "TS2 Community Discord Server!"
-!define MUI_FINISHPAGE_LINK_LOCATION "https://discord.gg/invite/ts2-community-912700195249197086"
+!define MUI_FINISHPAGE_LINK_LOCATION "https://discord.gg/ts2community"
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE "..\LICENSE.txt"
 !insertmacro MUI_PAGE_COMPONENTS
@@ -124,25 +124,49 @@ Section "TS1 Starter Pack" Section1
     WriteUninstaller "$INSTDIR\Uninstall The Sims 1 Starter Pack.exe"
 SectionEnd
 	
-Section "Visual C++ Redist (x64)" Section2
+Section "Visual C++ Redist" Section2
 	SectionInstType ${IT_FULL}
 	DetailPrint "Downloading VC Redist..."
-	NScurl::http GET "https://aka.ms/vs/17/release/vc_redist.x64.exe" "$INSTDIR\temp\vc_redist.x64.exe" /RESUME /INSIST /END
-	Pop $0
+	${If} ${RunningX64}
+        NScurl::http GET "https://aka.ms/vs/17/release/vc_redist.x64.exe" "$INSTDIR\temp\vc_redist.exe" /RESUME /INSIST /END
+	    Pop $0
+    ${Else} 
+        NScurl::http GET "https://aka.ms/vs/17/release/vc_redist.x86.exe" "$INSTDIR\temp\vc_redist.exe" /RESUME /INSIST /END
+        Pop $0
+    ${EndIf}
 	DetailPrint "VC Redist download status: $0. Executing silently..."
-	ExecWait "$INSTDIR\temp\vc_redist.x64.exe /q /norestart"
-	Delete "$INSTDIR\temp\vc_redist.x64.exe"
-	Pop $0
-	DetailPrint "Cleanup result: $0"	
+	ExecWait '"$INSTDIR\temp\vc_redist.exe" /q /norestart'
+	Delete "$INSTDIR\temp\vc_redist.exe"
 SectionEnd
 
 Section "TS1 Widescreen Patcher" Section3
 	SectionInstType ${IT_FULL}
     DetailPrint "Downloading The Sims 1 Widescreen Patcher..."
-    NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v13/components/Sims1WidescreenPatcher.exe "$INSTDIR\Sims1WidescreenPatcher.exe" /INSIST/ END	
-    Pop $0
-	NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v13/components/PatcherLicense.txt "$INSTDIR\PatcherLicense.txt" /BACKGROUND /END
-	DetailPrint "Patcher download status: $0. Executing Patcher..." 
+    ${If} ${RunningX64} 
+        NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v15/components/Sims1WidescreenPatcher.exe "$INSTDIR\Sims1WidescreenPatcher.exe" /INSIST /END	
+        Pop $0
+        DetailPrint "Patcher download status: $0."
+
+	    NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v15/components/PatcherLicense.txt "$INSTDIR\PatcherLicense.txt" /BACKGROUND /END
+    ${Else}
+        SetOutPath $INSTDIR\temp
+        NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v15/components/Patcher_Legacy.7z "$INSTDIR\temp\Patcher_Legacy.7z" /INSIST /END
+        Pop $0
+        DetailPrint "Patcher download status: $0. Extracting..."
+        SetOutPath $INSTDIR
+
+        Nsis7z::ExtractWithDetails "$INSTDIR\temp\Patcher_Legacy.7z" "Extracting Widescreen Patcher (Legacy) %s"
+        Pop $0
+        DetailPrint "Extract status: $0"
+        Delete "$INSTDIR\temp\Patcher_Legacy.7z"
+
+        NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v15/components/dotNetFx40_Full_x86_x64.exe "$INSTDIR\temp\dotnet.exe" /INSIST /END
+        DetailPrint ".NET download status: $0. Executing silently..."
+        ExecWait '"$INSTDIR\temp\dotnet.exe" /q /norestart'
+        Delete "$INSTDIR\temp\dotnet.exe"
+    ${EndIf}
+    SetOutPath $INSTDIR
+	DetailPrint "Executing Patcher..." 
 	Execwait "$INSTDIR\Sims1WidescreenPatcher.exe"
 SectionEnd
 
@@ -157,7 +181,6 @@ SectionEnd
 
 Section
 	RMDir "$INSTDIR\temp"	
-    ExecShell "open" $INSTDIR
 SectionEnd
 
 Section "Uninstall" Section8
@@ -169,6 +192,7 @@ Section "Uninstall" Section8
 	RMDir /r "$R4\The Sims Creator"
     Delete "$R4\Sims1WidescreenPatcher.exe"
     Delete "$R4\PatcherLicense.txt"
+    RMDIR /r $R4
     ${EndIf}
 	DeleteRegKey HKLM32 "SOFTWARE\Maxis\The Sims"
     DeleteRegKey HKLM32 "SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\Sims.exe"
@@ -180,8 +204,8 @@ SectionEnd
 
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
   !insertmacro MUI_DESCRIPTION_TEXT ${Section1} "Installs The Sims Complete Collection (minimal install)."
-  !insertmacro MUI_DESCRIPTION_TEXT ${Section2} "Installs Visual C++ Redist (x64). Required for Widescreen Patcher."
-  !insertmacro MUI_DESCRIPTION_TEXT ${Section3} "Installs The Sims 1 Widescreen Patcher v3.4.0 by FaithBeam."
+  !insertmacro MUI_DESCRIPTION_TEXT ${Section2} "Installs Visual C++ Redist, required for Widescreen Patcher."
+  !insertmacro MUI_DESCRIPTION_TEXT ${Section3} "Installs The Sims 1 Widescreen Patcher by FaithBeam."
   !insertmacro MUI_DESCRIPTION_TEXT ${Section7} "Create a shortuct to launch the game in your Start Menu/Desktop."
 
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
