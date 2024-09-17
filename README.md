@@ -3,7 +3,7 @@
 ### Download & setup resources for The Sims Complete Collection.
 
 
-[![Discord](https://img.shields.io/discord/912700195249197086?color=fa807a&label=osab%27s%20TS2%20Community%20Discord%20Server&logo=Discord&logoColor=white)](https://discord.com/servers/ts2-community-912700195249197086)  ![GitHub all releases](https://img.shields.io/github/downloads/voicemxil/TS-Starter-Pack/total)
+[![Discord](https://img.shields.io/discord/912700195249197086?color=fa807a&label=osab%27s%20TS2%20Community%20Discord%20Server&logo=Discord&logoColor=white)](https://discord.gg/TS2Community)  ![GitHub all releases](https://img.shields.io/github/downloads/voicemxil/TS-Starter-Pack/total)
 
 The Starter Pack is an all-in-one source for obtaining, installing, and optimizing TS1 on modern hardware. 
 
@@ -21,7 +21,7 @@ The Starter Pack is an all-in-one source for obtaining, installing, and optimizi
     - Create desktop/start menu shortcuts
 
 # Resources & Support:
-- For help with your TS1 Starter Pack, please [join TS2 Community](https://discord.gg/ts2-community-912700195249197086) and consult the #ts1-help channel! 
+- For help with your TS1 Starter Pack, please [join TS2 Community](https://discord.gg/ts2community) and consult the #ts1-help channel! 
 - We have FAQs/channels for the whole series and our support volunteers are active daily.
 - Our members share gameplay, CC/Mods, and plenty of other useful resources.
 ## Join TS2 Community here to access our TS1 channels!
