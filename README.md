@@ -25,7 +25,7 @@ The Starter Pack is an all-in-one source for obtaining, installing, and optimizi
 - We have FAQs/channels for the whole series and our support volunteers are active daily.
 - Our members share gameplay, CC/Mods, and plenty of other useful resources.
 ## Join TS2 Community here to access our TS1 channels!
-[<img src="https://discordapp.com/api/guilds/912700195249197086/widget.png?style=banner3" alt="">](https://discord.gg/ts2-community-912700195249197086)
+[<img src="https://discordapp.com/api/guilds/912700195249197086/widget.png?style=banner3" alt="">](https://discord.gg/ts2community)
 
 # Building:
 1. Install [negrutiu's NSIS fork](https://github.com/negrutiu/nsis).
