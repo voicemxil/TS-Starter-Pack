@@ -15,14 +15,14 @@ ShowInstDetails show
 InstallDir "$PROGRAMFILES32\The Sims 1 Starter Pack"
 SetCompressor /SOLID LZMA
 ManifestDPIAware True
-VIProductVersion 15.0.1.0
+VIProductVersion 15.0.3.0
 VIAddVersionKey "CompanyName" "osab"
-VIAddVersionKey "FileVersion" "15.0.1"
+VIAddVersionKey "FileVersion" "15.0.3"
 VIAddVersionKey "ProductName" "The Sims 1 Starter Pack"
-VIAddVersionKey "ProductVersion" "15.0.1"
+VIAddVersionKey "ProductVersion" "15.0.3"
 
 ########################### MUI SETUP
-brandingText "osab Web Installer v15"
+brandingText "osab Web Installer v15.0.3"
 !define MUI_ABORTWARNING
 !define MUI_INSTFILESPAGE_COLORS "FFFFFF 000000"
 !define MUI_HEADERIMAGE
@@ -37,7 +37,7 @@ brandingText "osab Web Installer v15"
 !define MUI_PAGE_HEADER_TEXT "TS1: Starter Pack - Web Installer"
 !define MUI_PAGE_HEADER_SUBTEXT "TS1 Complete Collection repacked by osab!"
 !define MUI_WELCOMEPAGE_TITLE "osab's Sims 1 Starter Pack"
-!define MUI_WELCOMEPAGE_TEXT "Welcome to the Sims 1 Starter Pack Web Installer (v15). $\n$\nPlease ensure you have downloaded the latest version from the GitHub!"
+!define MUI_WELCOMEPAGE_TEXT "Welcome to the Sims 1 Starter Pack Web Installer (v15.0.3). $\n$\nPlease ensure you have downloaded the latest version from the GitHub!"
 !define MUI_UNCONFIRMPAGE_TEXT_TOP "WARNING: Before uninstalling, make sure the game folder you chose contains ONLY the uninstaller and game files. The game files MUST be in their own folder with no other essential data! Back up any UserData save files left behind in the game folder if needed! I am not responsible for any data loss!"
 !define MUI_LICENSEPAGE_TEXT_TOP "License Information:"
 
@@ -115,7 +115,7 @@ Section "TS1 Starter Pack" Section1
     DetailPrint "Downloading The Sims Creator no-CD fix..."
     NScurl::http GET "https://raw.githubusercontent.com/voicemxil/TS-Starter-Pack/v13/components/TheSimsCreator.exe" "$INSTDIR\The Sims Creator\TheSimsCreator.exe" /INSIST /BACKGROUND /END
 
-    !insertmacro downloadPack "The Sims" https://github.com/mintalien/The-Puppets-2-Definitive-Edition/releases/download/v11/SFX_TheSims.v11.exe "temp\SFX_TheSims.exe" "5f3fc0dceec692f0b528f5e0b0060f2faf717bb88f622ad5d5c7f6eb3435d607"
+    !insertmacro downloadPack "The Sims" "https://github.com/mintalien/The-Puppets-2-Definitive-Edition/releases/download/v11/SFX_TheSims.v11.exe" "temp\SFX_TheSims.exe" "5f3fc0dceec692f0b528f5e0b0060f2faf717bb88f622ad5d5c7f6eb3435d607"
 
     # Touchup
     DetailPrint "Touching Up..."
@@ -152,18 +152,13 @@ Section "TS1 Widescreen Patcher" Section3
     DetailPrint "Downloading The Sims 1 Widescreen Patcher..."
     ${If} ${RunningX64} 
         SetOutPath $INSTDIR
-        NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v15/components/Sims1WidescreenPatcher.exe "$INSTDIR\Sims1WidescreenPatcher.exe" /INSIST /END	
+        NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v15.0.3/components/Sims1WidescreenPatcher.exe "$INSTDIR\Sims1WidescreenPatcher.exe" /INSIST /END	
         Pop $0
         DetailPrint "Patcher download status: $0."
 
         SetOutPath $INSTDIR
 	    DetailPrint "Executing Patcher..." 
 	    Execwait "$INSTDIR\Sims1WidescreenPatcher.exe"
-
-        SetOutPath "$INSTDIR\The Sims"
-        NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v15.0.1/components/ddraw.dll "$INSTDIR\The Sims\ddraw.dll" /INSIST /END
-        Pop $0
-        DetailPrint "Updated ddrawcompat download status: $0."
 
 	    NSCurl::http GET https://github.com/voicemxil/TS-Starter-Pack/raw/v15/components/PatcherLicense.txt "$INSTDIR\PatcherLicense.txt" /BACKGROUND /END
     ${Else}

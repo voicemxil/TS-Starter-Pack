@@ -15,14 +15,14 @@ ShowInstDetails show
 InstallDir "$PROGRAMFILES32\The Sims 1 Starter Pack"
 SetCompressor /SOLID LZMA
 ManifestDPIAware True
-VIProductVersion 15.0.0.0
+VIProductVersion 15.0.3.0
 VIAddVersionKey "CompanyName" "osab"
-VIAddVersionKey "FileVersion" "15.0.0"
+VIAddVersionKey "FileVersion" "15.0.3"
 VIAddVersionKey "ProductName" "The Sims 1 Starter Pack"
-VIAddVersionKey "ProductVersion" "15.0"
+VIAddVersionKey "ProductVersion" "15.0.3"
 
 ########################### MUI SETUP
-brandingText "osab Web Installer v15"
+brandingText "osab Web Installer v15.0.3"
 !define MUI_ABORTWARNING
 !define MUI_INSTFILESPAGE_COLORS "FFFFFF 000000"
 !define MUI_HEADERIMAGE
@@ -37,7 +37,7 @@ brandingText "osab Web Installer v15"
 !define MUI_PAGE_HEADER_TEXT "TS1: Starter Pack - Web Installer"
 !define MUI_PAGE_HEADER_SUBTEXT "TS1 Complete Collection repacked by osab!"
 !define MUI_WELCOMEPAGE_TITLE "osab's Sims 1 Starter Pack"
-!define MUI_WELCOMEPAGE_TEXT "Welcome to the Sims 1 Starter Pack Touchup Installer (v15). $\n$\nPlease ensure you have downloaded the latest version from the GitHub!"
+!define MUI_WELCOMEPAGE_TEXT "Welcome to the Sims 1 Starter Pack Touchup Installer (v15.0.3). $\n$\nPlease ensure you have downloaded the latest version from the GitHub!"
 !define MUI_UNCONFIRMPAGE_TEXT_TOP "WARNING: Before uninstalling, make sure the game folder you chose contains ONLY the uninstaller and game files. The game files MUST be in their own folder with no other essential data! Back up any UserData save files left behind in the game folder if needed! I am not responsible for any data loss!"
 !define MUI_LICENSEPAGE_TEXT_TOP "License Information:"
 !define MUI_FINISHPAGE_NOAUTOCLOSE
